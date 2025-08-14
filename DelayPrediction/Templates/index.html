@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Toronto Transit Delay Predictor</title>
+</head>
+<body>
+    <h2>AI-Enhanced Public Transit Delay Prediction</h2>
+    <form method="POST" action="/predict">
+        <label for="date">Date:</label><br>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="time">Time:</label><br>
+        <input type="time" id="time" name="time" required><br><br>
+
+        <label for="station">Station:</label><br>
+        <select id="station" name="station" required>
+            {% for station in stations %}
+                <option value="{{ station }}">{{ station }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <input type="submit" value="Predict Delay">
+    </form>
+
+    {% if predictions %}
+        <h3>Predicted Delays for {{ station }} on {{ date }}:</h3>
+        <ul>
+        {% for hour, category in predictions %}
+            <li>{{ hour }}:00 - {{ category }}</li>
+        {% endfor %}
+        </ul>
+        
+    {% endif %}
+</body>
+</html>
